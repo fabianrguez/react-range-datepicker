@@ -18,6 +18,7 @@ export const StyledCalendarInput = styled.fieldset`
   border: 1px solid black;
   position: relative;
   flex: 1;
+  height: 3rem;
 
   & label {
     position: absolute;
@@ -31,17 +32,17 @@ export const StyledCalendarInput = styled.fieldset`
   & input {
     width: 100%;
     flex: 1;
-    padding: 0.75rem 1rem;
+    text-align: right;
 
     &, &:focus {
       outline: none;
       border: none;
-    } 
+    }
   }
 `
 
 export const StyledCalendarMonths = styled.div`
-  display: flex;  
+  display: flex;
   position: absolute;
   transform: ${({ isVisible }) => (isVisible ? 'translateY(60px)' :'translateY(0)')};
   opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};

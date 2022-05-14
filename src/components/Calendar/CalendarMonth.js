@@ -1,10 +1,11 @@
 import { StyledCalendarMonth, StyledCalendarWeekDays } from './styles';
+import { WEEK_DAY, MONTHS } from 'constants';
 
-const WEEK_DAY = ['L', 'M', 'X', 'J', 'V', 'S', 'D'];
-
-export function CalendarMonth({ month, weeks }) {
-
-  const handleDaySelected = (day) => () => console.log(day);
+export function CalendarMonth({ month, year, weeks, onDaySelected }) {
+  const handleDaySelected = (day) => (e) => {
+    e.preventDefault();
+    onDaySelected(new Date(year, month, day));
+  };
 
   const renderWeeks = (weeks) =>
     weeks?.map(({ dates }, weekIndex) => {
@@ -17,16 +18,18 @@ export function CalendarMonth({ month, weeks }) {
       return (
         <StyledCalendarWeekDays key={weekIndex}>
           {dates.map((day, index) => (
-            <button key={`${day}-${index}`} onClick={handleDaySelected(day)}>{day !== 0 ? day : ''}</button>
+            <button key={`${day}-${index}`} onClick={handleDaySelected(day)}>
+              {day !== 0 ? day : ''}
+            </button>
           ))}
         </StyledCalendarWeekDays>
       );
     });
 
-  return (
+    return (
     <StyledCalendarMonth>
       <header>
-        <h2>{month}</h2>
+        <h2>{MONTHS[month]}</h2>
       </header>
       <div>
         <StyledCalendarWeekDays>
