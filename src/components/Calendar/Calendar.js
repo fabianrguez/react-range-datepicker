@@ -3,7 +3,15 @@ import { useEffect, useRef, useState } from 'react';
 import { formatDate, getWeeksInMonth } from 'utils';
 import { StyledCalendarInput, StyledCalendarInputs, StyledCalendarMonths, StyledCalendarWrapper } from './styles';
 
-export function Calendar({ months = 1, firstDayOfWeek = 1, onRangeSelected }) {
+const now = new Date();
+
+export function Calendar({
+  months = 1,
+  firstDayOfWeek = 1,
+  startDateLabel = 'start',
+  endDateLabel = 'end',
+  onRangeSelected,
+}) {
   const monthsRef = useRef();
   const [isRangeActive, setIsRangeActive] = useState(false);
   const [rangeStart, setRangeStart] = useState();
@@ -30,7 +38,10 @@ export function Calendar({ months = 1, firstDayOfWeek = 1, onRangeSelected }) {
       const startIndex = $allDays.findIndex((element) => element.dataset.key === rangeStart);
       const endIndex = $allDays.findIndex((element) => element.dataset.key === target.getAttribute('data-key'));
 
-      const $notInBetween = [...$allDays.slice(0, startIndex - 1), ...$allDays.slice(endIndex + 1, $allDays.length - 1)];
+      const $notInBetween = [
+        ...$allDays.slice(0, startIndex - 1),
+        ...$allDays.slice(endIndex + 1, $allDays.length - 1),
+      ];
       $notInBetween
         .filter(($btn) => $btn.getAttribute('data-key') !== rangeStart)
         .forEach(($notInBetweenBtn) => $notInBetweenBtn.classList.remove('active'));
@@ -60,11 +71,15 @@ export function Calendar({ months = 1, firstDayOfWeek = 1, onRangeSelected }) {
     }
   };
 
+  const isFirstMonth = (index) => index === 0;
+
+  const isLastMonth = (index, months) => months.length - 1 === index;
+
   useEffect(() => {
     setActualMonths(
       Array(months)
         .fill('')
-        .map((_, index) => {
+        .map((_, index, elements) => {
           const date = new Date();
           date.setMonth(date.getMonth() + index);
 
@@ -73,6 +88,8 @@ export function Calendar({ months = 1, firstDayOfWeek = 1, onRangeSelected }) {
             month: date.getMonth(),
             year: date.getFullYear(),
             weeks: getWeeksInMonth(date.getFullYear(), date.getMonth(), firstDayOfWeek),
+            prevMonth: isFirstMonth(index) && date.getMonth() !== now.getMonth() ? () => {} : null,
+            nextMonth: isLastMonth(index, elements) ? () => {} : null,
           };
         })
     );
@@ -82,11 +99,11 @@ export function Calendar({ months = 1, firstDayOfWeek = 1, onRangeSelected }) {
     <StyledCalendarWrapper>
       <StyledCalendarInputs>
         <StyledCalendarInput>
-          <label htmlFor="">Check in</label>
+          <label htmlFor="">{startDateLabel}</label>
           <input type="text" readOnly value={startDate} onFocus={handleInputsFocus} onBlur={handleInputsBlur} />
         </StyledCalendarInput>
         <StyledCalendarInput>
-          <label>Check out</label>
+          <label>{endDateLabel}</label>
           <input type="text" readOnly value={endDate} onFocus={handleInputsFocus} onBlur={handleInputsBlur} />
         </StyledCalendarInput>
       </StyledCalendarInputs>

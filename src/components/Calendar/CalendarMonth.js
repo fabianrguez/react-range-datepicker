@@ -1,7 +1,7 @@
-import { StyledCalendarMonth, StyledCalendarWeekDays, StyledCalendarWeeks } from './styles';
+import { StyledCalendarHeader, StyledCalendarMonth, StyledCalendarWeekDays, StyledCalendarWeeks } from './styles';
 import { WEEK_DAY, MONTHS } from 'constants';
 
-export function CalendarMonth({ month, year, weeks, onDaySelected }) {
+export function CalendarMonth({ month, year, weeks, prevMonth, nextMonth, onDaySelected }) {
   const handleDaySelected = (day) => (e) => {
     e.preventDefault();
     e.target.classList.add('active');
@@ -34,9 +34,14 @@ export function CalendarMonth({ month, year, weeks, onDaySelected }) {
 
   return (
     <StyledCalendarMonth>
-      <header>
-        <h2>{MONTHS[month]}</h2>
-      </header>
+      <StyledCalendarHeader>
+        {prevMonth && <button>{`<`}</button>}
+        <h2>
+          <span>{MONTHS[month]}</span>
+          <span>{year}</span>
+        </h2>
+        {nextMonth && <button onClick={nextMonth}>{`>`}</button>}
+      </StyledCalendarHeader>
       <StyledCalendarWeeks>
         <StyledCalendarWeekDays>
           {WEEK_DAY.map((weekDay) => (

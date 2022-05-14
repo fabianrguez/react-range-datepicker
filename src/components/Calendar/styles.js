@@ -43,6 +43,7 @@ export const StyledCalendarInput = styled.fieldset`
 
 export const StyledCalendarMonths = styled.div`
   display: flex;
+  flex-wrap: wrap;
   position: absolute;
   transform: ${({ isVisible }) => (isVisible ? 'translateY(60px)' :'translateY(0)')};
   opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
@@ -56,6 +57,17 @@ export const StyledCalendarMonth = styled.div`
   flex-direction: column;
   flex: 1;
   border: 1px solid black;
+`
+
+export const StyledCalendarHeader = styled.header`
+  display: flex;
+
+  & h2 {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 `
 
 export const StyledCalendarWeeks = styled.div`
