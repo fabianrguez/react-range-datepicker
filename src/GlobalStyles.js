@@ -7,6 +7,12 @@ export const StyledGlobalStyles = createGlobalStyle`
     box-sizing: border-box;
   }
 
+  button {
+    border: none;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+
   *::before, *::after {
     box-sizing: inherit;
   }

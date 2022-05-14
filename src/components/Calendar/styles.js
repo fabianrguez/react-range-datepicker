@@ -58,21 +58,34 @@ export const StyledCalendarMonth = styled.div`
   border: 1px solid black;
 `
 
+export const StyledCalendarWeeks = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+`;
+
 export const StyledCalendarWeekDays = styled.div`
   display: flex;
   justify-content: space-between;
+  gap: 0.35rem;
 
   & > * {
     display: flex;
     align-items: center;
     justify-content: center;
     flex: 1;
+    flex-basis: 0;
   }
 
   & > button {
     &.active {
       background: rebeccapurple;
       color: #fff;
+    }
+    &.placeholder {
+      border: transparent;
+      background: transparent;
+      pointer-events: none;
     }
   }
 `

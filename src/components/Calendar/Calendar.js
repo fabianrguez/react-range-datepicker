@@ -12,7 +12,7 @@ export function Calendar({ months = 1, firstDayOfWeek = 1 }) {
   const [areMonthsVisible, setAreMonthsVisible] = useState(false);
   const [actualMonths, setActualMonths] = useState([]);
 
-  const getAllDays = () => [...monthsRef.current.querySelectorAll(`button`)];
+  const getAllDays = () => [...monthsRef.current.querySelectorAll('button:not(.placeholder)')];
 
   const removeActiveDays = ({ ignore = '' }) => {
     const allDays = getAllDays();

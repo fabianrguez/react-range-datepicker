@@ -1,4 +1,4 @@
-import { StyledCalendarMonth, StyledCalendarWeekDays } from './styles';
+import { StyledCalendarMonth, StyledCalendarWeekDays, StyledCalendarWeeks } from './styles';
 import { WEEK_DAY, MONTHS } from 'constants';
 
 export function CalendarMonth({ month, year, weeks, onDaySelected }) {
@@ -19,15 +19,15 @@ export function CalendarMonth({ month, year, weeks, onDaySelected }) {
       }
       return (
         <StyledCalendarWeekDays key={weekIndex}>
-          {dates.map((day, index) => (
-            <button
-              key={`${day}-${index}`}
-              data-key={`${month}-${day}`}
-              onClick={handleDaySelected(day)}
-            >
-              {day !== 0 ? day : ''}
-            </button>
-          ))}
+          {dates.map((day, index) =>
+            day !== 0 ? (
+              <button key={`${day}-${index}`} data-key={`${month}-${day}`} onClick={handleDaySelected(day)}>
+                {day}
+              </button>
+            ) : (
+              <button key={index} className="placeholder"></button>
+            )
+          )}
         </StyledCalendarWeekDays>
       );
     });
@@ -37,14 +37,14 @@ export function CalendarMonth({ month, year, weeks, onDaySelected }) {
       <header>
         <h2>{MONTHS[month]}</h2>
       </header>
-      <div>
+      <StyledCalendarWeeks>
         <StyledCalendarWeekDays>
           {WEEK_DAY.map((weekDay) => (
             <span key={weekDay}>{weekDay}</span>
           ))}
         </StyledCalendarWeekDays>
         {renderWeeks(weeks)}
-      </div>
+      </StyledCalendarWeeks>
     </StyledCalendarMonth>
   );
 }
