@@ -4,7 +4,9 @@ import { WEEK_DAY, MONTHS } from 'constants';
 export function CalendarMonth({ month, year, weeks, onDaySelected }) {
   const handleDaySelected = (day) => (e) => {
     e.preventDefault();
-    onDaySelected(new Date(year, month, day));
+    e.target.className = 'active';
+    const dayKey = e.target.getAttribute('data-key');
+    onDaySelected({ date: new Date(year, month, day), dayKey });
   };
 
   const renderWeeks = (weeks) =>
@@ -18,7 +20,11 @@ export function CalendarMonth({ month, year, weeks, onDaySelected }) {
       return (
         <StyledCalendarWeekDays key={weekIndex}>
           {dates.map((day, index) => (
-            <button key={`${day}-${index}`} onClick={handleDaySelected(day)}>
+            <button
+              key={`${day}-${index}`}
+              data-key={`${month}-${day}`}
+              onClick={handleDaySelected(day)}
+            >
               {day !== 0 ? day : ''}
             </button>
           ))}
@@ -26,7 +32,7 @@ export function CalendarMonth({ month, year, weeks, onDaySelected }) {
       );
     });
 
-    return (
+  return (
     <StyledCalendarMonth>
       <header>
         <h2>{MONTHS[month]}</h2>

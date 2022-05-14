@@ -68,4 +68,11 @@ export const StyledCalendarWeekDays = styled.div`
     justify-content: center;
     flex: 1;
   }
+
+  & > button {
+    &.active {
+      background: rebeccapurple;
+      color: #fff;
+    }
+  }
 `
