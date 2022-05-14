@@ -67,7 +67,7 @@ export const StyledCalendarWeeks = styled.div`
 export const StyledCalendarWeekDays = styled.div`
   display: flex;
   justify-content: space-between;
-  gap: 0.35rem;
+  gap: 0.15rem;
 
   & > * {
     display: flex;
@@ -78,6 +78,7 @@ export const StyledCalendarWeekDays = styled.div`
   }
 
   & > button {
+    padding: 0.35rem 0.75rem;
     &.active {
       background: rebeccapurple;
       color: #fff;

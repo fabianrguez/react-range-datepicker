@@ -4,7 +4,7 @@ import { WEEK_DAY, MONTHS } from 'constants';
 export function CalendarMonth({ month, year, weeks, onDaySelected }) {
   const handleDaySelected = (day) => (e) => {
     e.preventDefault();
-    e.target.className = 'active';
+    e.target.classList.add('active');
     const dayKey = e.target.getAttribute('data-key');
     onDaySelected({ date: new Date(year, month, day), dayKey });
   };

@@ -3,12 +3,12 @@ import { useEffect, useRef, useState } from 'react';
 import { formatDate, getWeeksInMonth } from 'utils';
 import { StyledCalendarInput, StyledCalendarInputs, StyledCalendarMonths, StyledCalendarWrapper } from './styles';
 
-export function Calendar({ months = 1, firstDayOfWeek = 1 }) {
+export function Calendar({ months = 1, firstDayOfWeek = 1, onRangeSelected }) {
   const monthsRef = useRef();
   const [isRangeActive, setIsRangeActive] = useState(false);
   const [rangeStart, setRangeStart] = useState();
-  const [checkInDate, setCheckInDate] = useState('');
-  const [checkOutDate, setCheckOutDate] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
   const [areMonthsVisible, setAreMonthsVisible] = useState(false);
   const [actualMonths, setActualMonths] = useState([]);
 
@@ -26,12 +26,17 @@ export function Calendar({ months = 1, firstDayOfWeek = 1 }) {
   const handleRangeSelection = (e) => {
     if (isRangeActive) {
       const { target } = e;
-      const allDays = removeActiveDays({ ignore: rangeStart });
-      const startIndex = allDays.findIndex((element) => element.dataset.key === rangeStart);
-      const endIndex = allDays.findIndex((element) => element.dataset.key === target.getAttribute('data-key'));
+      const $allDays = getAllDays();
+      const startIndex = $allDays.findIndex((element) => element.dataset.key === rangeStart);
+      const endIndex = $allDays.findIndex((element) => element.dataset.key === target.getAttribute('data-key'));
 
-      const inBetween = allDays.slice(startIndex + 1, endIndex + 1);
-      inBetween.forEach((button) => button.classList.add('active'));
+      const $notInBetween = [...$allDays.slice(0, startIndex - 1), ...$allDays.slice(endIndex + 1, $allDays.length - 1)];
+      $notInBetween
+        .filter(($btn) => $btn.getAttribute('data-key') !== rangeStart)
+        .forEach(($notInBetweenBtn) => $notInBetweenBtn.classList.remove('active'));
+
+      const $inBetween = $allDays.slice(startIndex, endIndex + 1);
+      $inBetween.forEach(($button) => $button.classList.add('active'));
     }
   };
 
@@ -41,16 +46,17 @@ export function Calendar({ months = 1, firstDayOfWeek = 1 }) {
 
   const handleDaySelected = ({ date, dayKey }) => {
     const dateFormatted = formatDate(date);
-    if ((!checkInDate && !checkOutDate) || (checkInDate && checkOutDate)) {
-      if (checkOutDate) setCheckOutDate('');
-      setCheckInDate(dateFormatted);
+    if ((!startDate && !endDate) || (startDate && endDate)) {
+      setEndDate('');
+      setStartDate(dateFormatted);
       setIsRangeActive(true);
       setRangeStart(dayKey);
       removeActiveDays({ ignore: dayKey });
-    } else if (checkInDate && !checkOutDate) {
-      setCheckOutDate(dateFormatted);
+    } else if (startDate && !endDate) {
+      setEndDate(dateFormatted);
       setAreMonthsVisible(false);
       setIsRangeActive(false);
+      onRangeSelected({ range: { start: startDate, end: dateFormatted } });
     }
   };
 
@@ -77,11 +83,11 @@ export function Calendar({ months = 1, firstDayOfWeek = 1 }) {
       <StyledCalendarInputs>
         <StyledCalendarInput>
           <label htmlFor="">Check in</label>
-          <input type="text" readOnly value={checkInDate} onFocus={handleInputsFocus} onBlur={handleInputsBlur} />
+          <input type="text" readOnly value={startDate} onFocus={handleInputsFocus} onBlur={handleInputsBlur} />
         </StyledCalendarInput>
         <StyledCalendarInput>
           <label>Check out</label>
-          <input type="text" readOnly value={checkOutDate} onFocus={handleInputsFocus} onBlur={handleInputsBlur} />
+          <input type="text" readOnly value={endDate} onFocus={handleInputsFocus} onBlur={handleInputsBlur} />
         </StyledCalendarInput>
       </StyledCalendarInputs>
       <StyledCalendarMonths ref={monthsRef} isVisible={areMonthsVisible} onMouseOver={handleRangeSelection}>

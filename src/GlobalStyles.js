@@ -8,6 +8,7 @@ export const StyledGlobalStyles = createGlobalStyle`
   }
 
   button {
+    cursor: pointer;
     border: none;
     appearance: none;
     -webkit-appearance: none;
