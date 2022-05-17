@@ -60,6 +60,14 @@ export function useCalendarRange({ onRangeSelected }) {
     () =>
       setAreMonthsVisible(visible);
 
+  const handleCalendarsBlur = (e) => {
+    e.preventDefault();
+    if (!e.currentTarget.contains(e.relatedTarget)) {
+      console.log(e.currentTarget, e.relatedTarget);
+      if (areMonthsVisible) setAreMonthsVisible(false);
+    }
+  };
+
   return {
     monthsRef,
     rangeFormatted: {
@@ -69,6 +77,7 @@ export function useCalendarRange({ onRangeSelected }) {
     areMonthsVisible,
     handleDaySelected,
     handleRangeSelection,
+    handleCalendarsBlur,
     toggleMonthsVisibility,
   };
 }

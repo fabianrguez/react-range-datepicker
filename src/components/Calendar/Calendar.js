@@ -9,7 +9,7 @@ export function Calendar({
   endDateLabel = 'end',
   onRangeSelected,
 }) {
-  const [actualMonths] = useActualMonths({ months, firstDayOfWeek });
+  const actualMonths = useActualMonths({ months, firstDayOfWeek });
   const {
     monthsRef,
     rangeFormatted,
@@ -23,27 +23,23 @@ export function Calendar({
 
   return (
     <StyledCalendarWrapper>
-      <StyledCalendarInputs>
+      <StyledCalendarInputs aria-controls="calendars">
         <StyledCalendarInput>
           <label htmlFor="">{startDateLabel}</label>
-          <input
-            type="text"
-            readOnly
-            value={rangeFormatted.startDate}
-            onFocus={toggleMonthsVisibility(true)}
-          />
+          <input type="text" readOnly value={rangeFormatted.startDate} onFocus={toggleMonthsVisibility(true)} />
         </StyledCalendarInput>
         <StyledCalendarInput>
           <label>{endDateLabel}</label>
-          <input
-            type="text"
-            readOnly
-            value={rangeFormatted.endDate}
-            onFocus={toggleMonthsVisibility(true)}
-          />
+          <input type="text" readOnly value={rangeFormatted.endDate} onFocus={toggleMonthsVisibility(true)} />
         </StyledCalendarInput>
       </StyledCalendarInputs>
-      <StyledCalendarMonths ref={monthsRef} isVisible={areMonthsVisible} onMouseOver={handleRangeSelection}>
+      <StyledCalendarMonths
+        id="calendars"
+        tabIndex="0"
+        ref={monthsRef}
+        isVisible={areMonthsVisible}
+        onMouseOver={handleRangeSelection}
+      >
         {actualMonths?.map((date) => (
           <CalendarMonth {...date} onDaySelected={handleDaySelected} />
         ))}

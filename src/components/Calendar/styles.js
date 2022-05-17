@@ -102,3 +102,13 @@ export const StyledCalendarWeekDays = styled.div`
     }
   }
 `
+
+export const StyledNavigationButton = styled.button`
+  display: inline-flex;
+  align-items: center;
+  padding: 0.75rem;
+  height: 2rem;
+  width: 2rem;
+  border-radius: 50%;
+  margin: 0.5rem;
+`

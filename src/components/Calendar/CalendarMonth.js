@@ -1,4 +1,4 @@
-import { StyledCalendarHeader, StyledCalendarMonth, StyledCalendarWeekDays, StyledCalendarWeeks } from './styles';
+import { StyledCalendarHeader, StyledCalendarMonth, StyledCalendarWeekDays, StyledCalendarWeeks, StyledNavigationButton } from './styles';
 import { WEEK_DAY, MONTHS } from 'constants';
 
 export function CalendarMonth({ month, year, weeks, prevMonth, nextMonth, onDaySelected }) {
@@ -35,12 +35,12 @@ export function CalendarMonth({ month, year, weeks, prevMonth, nextMonth, onDayS
   return (
     <StyledCalendarMonth>
       <StyledCalendarHeader>
-        {prevMonth && <button>{`<`}</button>}
+        {prevMonth && <StyledNavigationButton onClick={prevMonth}>{`<`}</StyledNavigationButton>}
         <h2>
           <span>{MONTHS[month]}</span>
           <span>{year}</span>
         </h2>
-        {nextMonth && <button onClick={nextMonth}>{`>`}</button>}
+        {nextMonth && <StyledNavigationButton onClick={nextMonth}>{`>`}</StyledNavigationButton>}
       </StyledCalendarHeader>
       <StyledCalendarWeeks>
         <StyledCalendarWeekDays>
