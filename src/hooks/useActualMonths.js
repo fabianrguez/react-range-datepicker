@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from 'react';
-import { act } from 'react-dom/test-utils';
 import { getWeeksInMonth } from 'utils';
 
 const now = new Date();
@@ -10,14 +9,8 @@ export function useActualMonths({ months, firstDayOfWeek }) {
   const [monthsOffset, setMonthsOffset] = useState(0);
   const [actualMonths, setActualMonths] = useState();
 
-  const goNextMonth = useCallback(() => {
-    console.log('go next');
-    setMonthsOffset((prev) => prev + 1);
-  }, []);
-  const goPrevMonth = useCallback(() => {
-    console.log('go prev');
-    setMonthsOffset((prev) => prev > 0 && prev - 1);
-  }, []);
+  const goNextMonth = useCallback(() => setMonthsOffset((prev) => prev + 1), []);
+  const goPrevMonth = useCallback(() => setMonthsOffset((prev) => prev > 0 && prev - 1), []);
 
   useEffect(() => {
     setActualMonths(
