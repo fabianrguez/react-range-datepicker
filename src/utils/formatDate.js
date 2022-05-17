@@ -1,1 +1,1 @@
-export const formatDate = (date, lang = 'es') => Intl.DateTimeFormat(lang).format(date);
+export const formatDate = (date, lang = 'es') => date ? Intl.DateTimeFormat(lang).format(date) : '';
