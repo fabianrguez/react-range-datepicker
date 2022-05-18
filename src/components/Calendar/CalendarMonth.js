@@ -35,12 +35,12 @@ export function CalendarMonth({ month, year, weeks, prevMonth, nextMonth, onDayS
   return (
     <StyledCalendarMonth>
       <StyledCalendarHeader>
-        {prevMonth && <StyledNavigationButton onClick={prevMonth}>{`<`}</StyledNavigationButton>}
+        <StyledNavigationButton isHidden={!prevMonth} onClick={prevMonth}>{`<`}</StyledNavigationButton>
         <h2>
           <span>{MONTHS[month]}</span>
           <span>{year}</span>
         </h2>
-        {nextMonth && <StyledNavigationButton onClick={nextMonth}>{`>`}</StyledNavigationButton>}
+        <StyledNavigationButton isHidden={!nextMonth} onClick={nextMonth}>{`>`}</StyledNavigationButton>
       </StyledCalendarHeader>
       <StyledCalendarWeeks>
         <StyledCalendarWeekDays>

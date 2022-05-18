@@ -34,41 +34,46 @@ export const StyledCalendarInput = styled.fieldset`
     flex: 1;
     text-align: right;
 
-    &, &:focus {
+    &,
+    &:focus {
       outline: none;
       border: none;
     }
   }
-`
+`;
 
 export const StyledCalendarMonths = styled.div`
   display: flex;
   flex-wrap: wrap;
   position: absolute;
-  transform: ${({ isVisible }) => (isVisible ? 'translateY(60px)' :'translateY(0)')};
+  transform: ${({ isVisible }) => (isVisible ? 'translateY(50px)' : 'translateY(0)')};
   opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
   visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
   transition: transform 0.5s, opacity 0.3s, visibility 0.2s;
   width: 100%;
+  gap: 0.35rem;
+  background: #e8e8e8;
+  padding: 0.5rem;
+  border-radius: 12px;
 `;
 
 export const StyledCalendarMonth = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
-  border: 1px solid black;
-`
+`;
 
 export const StyledCalendarHeader = styled.header`
   display: flex;
+  align-items: center;
+  height: 4rem;
 
   & h2 {
     flex: 1;
     display: flex;
     align-items: center;
-    justify-content: space-between;
   }
-`
+`;
 
 export const StyledCalendarWeeks = styled.div`
   display: flex;
@@ -86,14 +91,25 @@ export const StyledCalendarWeekDays = styled.div`
     align-items: center;
     justify-content: center;
     flex: 1;
-    flex-basis: 0;
+  }
+
+  & > span {
+    font-weight: 600;
   }
 
   & > button {
+    background: transparent;
     padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+    transition: all 0.3s;
+
+    &:hover:not(.active) {
+      background: #cecece;
+    }
+
     &.active {
       background: rebeccapurple;
-      color: #fff;
+      color: #ffffff;
     }
     &.placeholder {
       border: transparent;
@@ -101,7 +117,7 @@ export const StyledCalendarWeekDays = styled.div`
       pointer-events: none;
     }
   }
-`
+`;
 
 export const StyledNavigationButton = styled.button`
   display: inline-flex;
@@ -111,4 +127,8 @@ export const StyledNavigationButton = styled.button`
   width: 2rem;
   border-radius: 50%;
   margin: 0.5rem;
-`
+  ${({ isHidden }) => isHidden &&  `
+    opacity: 0;
+    pointer-events: none;
+  `}
+`;
