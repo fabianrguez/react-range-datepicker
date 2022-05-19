@@ -7,6 +7,8 @@ function App() {
         months={2}
         startDateLabel="Check In"
         endDateLabel="Check Out"
+        locale="en"
+        weekDayNameLength="short"
         onRangeSelected={({ range }) => console.log('range selected', range)}
       />
     </div>

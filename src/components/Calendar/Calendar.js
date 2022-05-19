@@ -8,6 +8,8 @@ export function Calendar({
   startDateLabel = 'start',
   endDateLabel = 'end',
   onRangeSelected,
+  locale = 'en',
+  weekDayNameLength = 'short'
 }) {
   const actualMonths = useActualMonths({ months, firstDayOfWeek });
   const {
@@ -41,7 +43,7 @@ export function Calendar({
         onMouseOver={handleRangeSelection}
       >
         {actualMonths?.map((date) => (
-          <CalendarMonth {...date} onDaySelected={handleDaySelected} />
+          <CalendarMonth {...date} locale={locale} weekDayNameLength={weekDayNameLength} onDaySelected={handleDaySelected} />
         ))}
       </StyledCalendarMonths>
     </StyledCalendarWrapper>

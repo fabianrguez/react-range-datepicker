@@ -1,7 +1,13 @@
-import { StyledCalendarHeader, StyledCalendarMonth, StyledCalendarWeekDays, StyledCalendarWeeks, StyledNavigationButton } from './styles';
-import { WEEK_DAY, MONTHS } from 'constants';
+import { getMonthNamei18n, getWeekDaysNamesi18n } from 'utils';
+import {
+  StyledCalendarHeader,
+  StyledCalendarMonth,
+  StyledCalendarWeekDays,
+  StyledCalendarWeeks,
+  StyledNavigationButton,
+} from './styles';
 
-export function CalendarMonth({ month, year, weeks, prevMonth, nextMonth, onDaySelected }) {
+export function CalendarMonth({ month, year, weeks, prevMonth, nextMonth, locale, weekDayNameLength, onDaySelected }) {
   const handleDaySelected = (day) => (e) => {
     e.preventDefault();
     e.target.classList.add('active');
@@ -37,14 +43,14 @@ export function CalendarMonth({ month, year, weeks, prevMonth, nextMonth, onDayS
       <StyledCalendarHeader>
         <StyledNavigationButton isHidden={!prevMonth} onClick={prevMonth}>{`<`}</StyledNavigationButton>
         <h2>
-          <span>{MONTHS[month]}</span>
+          <span>{getMonthNamei18n(month, locale)}</span>
           <span>{year}</span>
         </h2>
         <StyledNavigationButton isHidden={!nextMonth} onClick={nextMonth}>{`>`}</StyledNavigationButton>
       </StyledCalendarHeader>
       <StyledCalendarWeeks>
         <StyledCalendarWeekDays>
-          {WEEK_DAY.map((weekDay) => (
+          {getWeekDaysNamesi18n(locale, weekDayNameLength).map((weekDay) => (
             <span key={weekDay}>{weekDay}</span>
           ))}
         </StyledCalendarWeekDays>

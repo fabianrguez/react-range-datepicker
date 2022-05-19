@@ -14,21 +14,19 @@ export function useActualMonths({ months, firstDayOfWeek }) {
 
   useEffect(() => {
     setActualMonths(
-      Array(months)
-        .fill('')
-        .map((_, index, elements) => {
-          const date = new Date();
-          date.setMonth(date.getMonth() + (monthsOffset + index));
+      [...Array(months).keys()].map((monthIndex, _, elements) => {
+        const date = new Date();
+        date.setMonth(date.getMonth() + (monthsOffset + monthIndex));
 
-          return {
-            key: index,
-            month: date.getMonth(),
-            year: date.getFullYear(),
-            weeks: getWeeksInMonth(date.getFullYear(), date.getMonth(), firstDayOfWeek),
-            prevMonth: isFirstMonth(index) && date.getMonth() !== now.getMonth() ? goPrevMonth : null,
-            nextMonth: isLastMonth(index, elements) ? goNextMonth : null,
-          };
-        })
+        return {
+          key: monthIndex,
+          month: date.getMonth(),
+          year: date.getFullYear(),
+          weeks: getWeeksInMonth(date.getFullYear(), date.getMonth(), firstDayOfWeek),
+          prevMonth: isFirstMonth(monthIndex) && date.getMonth() !== now.getMonth() ? goPrevMonth : null,
+          nextMonth: isLastMonth(monthIndex, elements) ? goNextMonth : null,
+        };
+      })
     );
     //eslint-disable-next-line
   }, [months, firstDayOfWeek, monthsOffset]);

@@ -1,1 +1,0 @@
-export const WEEK_DAY = ['L', 'M', 'X', 'J', 'V', 'S', 'D'];
