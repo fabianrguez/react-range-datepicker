@@ -61,17 +61,34 @@ export const StyledCalendarMonth = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
+  position: relative;
+
+  &:not(:first-of-type) {
+    &::before {
+      content: '';
+      position: absolute;
+      background: #663399;
+      height: 100%;
+      width: 1px;
+      transform: translateX(-3px);
+    }
+  }
 `;
 
 export const StyledCalendarHeader = styled.header`
   display: flex;
   align-items: center;
   height: 4rem;
+  background: #663399;
+  color: #ffffff;
+  border-radius: 4px;
+  margin-bottom: 0.75rem;
 
   & h2 {
     flex: 1;
     display: flex;
     align-items: center;
+    justify-content: center;
   }
 `;
 
@@ -84,7 +101,7 @@ export const StyledCalendarWeeks = styled.div`
 export const StyledCalendarWeekDays = styled.div`
   display: flex;
   justify-content: space-between;
-  gap: 0.15rem;
+  /* gap: 0.15rem; */
 
   & > * {
     display: flex;
@@ -100,15 +117,16 @@ export const StyledCalendarWeekDays = styled.div`
   & > button {
     background: transparent;
     padding: 0.35rem 0.75rem;
-    border-radius: 6px;
     transition: all 0.3s;
+    font-size: 1.5ch;
 
     &:hover:not(.active) {
       background: #cecece;
+      border-radius: 6px;
     }
 
     &.active {
-      background: rebeccapurple;
+      background: #663399;
       color: #ffffff;
     }
     &.placeholder {
@@ -122,12 +140,18 @@ export const StyledCalendarWeekDays = styled.div`
 export const StyledNavigationButton = styled.button`
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   padding: 0.75rem;
   height: 2rem;
   width: 2rem;
-  border-radius: 50%;
-  margin: 0.5rem;
-  ${({ isHidden }) => isHidden &&  `
+  border-top-left-radius: ${({ isGoingRight }) => (isGoingRight ? '50%' : 0)};
+  border-bottom-left-radius: ${({ isGoingRight }) => (isGoingRight ? '50%' : 0)};
+  border-top-right-radius: ${({ isGoingRight }) => (isGoingRight ? 0 : '50%')};
+  border-bottom-right-radius: ${({ isGoingRight }) => (isGoingRight ? 0 : '50%')};
+  transition: all 0.3s;
+  ${({ isHidden }) =>
+    isHidden &&
+    `
     opacity: 0;
     pointer-events: none;
   `}

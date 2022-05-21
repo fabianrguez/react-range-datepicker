@@ -46,7 +46,7 @@ export function CalendarMonth({ month, year, weeks, prevMonth, nextMonth, locale
           <span>{getMonthNamei18n(month, locale)}</span>
           <span>{year}</span>
         </h2>
-        <StyledNavigationButton isHidden={!nextMonth} onClick={nextMonth}>{`>`}</StyledNavigationButton>
+        <StyledNavigationButton isGoingRight isHidden={!nextMonth} onClick={nextMonth}>{`>`}</StyledNavigationButton>
       </StyledCalendarHeader>
       <StyledCalendarWeeks>
         <StyledCalendarWeekDays>
