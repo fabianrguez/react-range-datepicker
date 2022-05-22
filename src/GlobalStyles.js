@@ -27,4 +27,31 @@ export const StyledGlobalStyles = createGlobalStyle`
     text-decoration: none;
     color: inherit;
   }
-`
+
+  .chevron {
+    &--prev, &--next {
+      &:before {
+        content: '';
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-style: solid;
+	      border-width: 0.25em 0.25em 0 0;
+        height: 0.75em;
+        left: 0.15em;
+        position: relative;
+        top: 0.15em;
+        width: 0.75em;
+        vertical-align: top;
+      }
+    }
+
+    &--next {
+      transform: rotate(45deg);
+    }
+
+    &--prev {
+      transform: rotate(-130deg)
+    }
+  }
+`;

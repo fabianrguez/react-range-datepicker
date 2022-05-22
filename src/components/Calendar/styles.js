@@ -69,8 +69,8 @@ export const StyledCalendarMonth = styled.div`
       position: absolute;
       background: #663399;
       height: 100%;
-      width: 1px;
-      transform: translateX(-3px);
+      width: 2px;
+      transform: translateX(-4px);
     }
   }
 `;
@@ -144,6 +144,7 @@ export const StyledNavigationButton = styled.button`
   padding: 0.75rem;
   height: 2rem;
   width: 2rem;
+  background: #e8e8e8;
   border-top-left-radius: ${({ isGoingRight }) => (isGoingRight ? '50%' : 0)};
   border-bottom-left-radius: ${({ isGoingRight }) => (isGoingRight ? '50%' : 0)};
   border-top-right-radius: ${({ isGoingRight }) => (isGoingRight ? 0 : '50%')};
