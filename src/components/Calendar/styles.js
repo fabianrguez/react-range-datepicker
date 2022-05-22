@@ -120,7 +120,11 @@ export const StyledCalendarWeekDays = styled.div`
     transition: all 0.3s;
     font-size: 1.5ch;
 
-    &:hover:not(.active) {
+    &:disabled {
+      cursor: not-allowed;
+    }
+
+    &:hover:not(.active):not(:disabled) {
       background: #cecece;
       border-radius: 6px;
     }

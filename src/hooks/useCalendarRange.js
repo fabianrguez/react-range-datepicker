@@ -9,7 +9,7 @@ export function useCalendarRange({ onRangeSelected }) {
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
 
-  const getAllDays = () => [...monthsRef.current.querySelectorAll('button:not(.placeholder)')];
+  const getAllDays = () => [...monthsRef.current.querySelectorAll('.day')];
 
   const removeActiveDays = ({ ignore = '' }) => {
     const allDays = getAllDays();
@@ -40,6 +40,19 @@ export function useCalendarRange({ onRangeSelected }) {
     }
   };
 
+  const disableDaysBeforeStart = (rangeStartKey) => {
+    const $allDays = getAllDays();
+    const startIndex = $allDays.findIndex((element) => element.dataset.key === rangeStartKey);
+
+    const $daysBeforeStart = $allDays.slice(0, startIndex);
+    $daysBeforeStart.forEach(($day) => $day.setAttribute('disabled', ''));
+  };
+
+  const enableAllDays = () => {
+    const $allDays = getAllDays();
+    $allDays.filter(($day) => $day.disabled).forEach(($day) => $day.removeAttribute('disabled'));
+  };
+
   const handleDaySelected = ({ date, dayKey }) => {
     if ((!startDate && !endDate) || (startDate && endDate)) {
       setEndDate('');
@@ -47,10 +60,12 @@ export function useCalendarRange({ onRangeSelected }) {
       setIsRangeActive(true);
       setRangeStart(dayKey);
       removeActiveDays({ ignore: dayKey });
+      disableDaysBeforeStart(dayKey);
     } else if (startDate && !endDate) {
       setEndDate(date);
       setAreMonthsVisible(false);
       setIsRangeActive(false);
+      enableAllDays();
       onRangeSelected({ range: { start: startDate, end: date, days: daysDifference(startDate, date) } });
     }
   };

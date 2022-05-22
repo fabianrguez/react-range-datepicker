@@ -27,7 +27,7 @@ export function CalendarMonth({ month, year, weeks, prevMonth, nextMonth, locale
         <StyledCalendarWeekDays key={weekIndex}>
           {dates.map((day, index) =>
             day !== 0 ? (
-              <button key={`${day}-${index}`} data-key={`${month}-${day}`} onClick={handleDaySelected(day)}>
+              <button className="day" key={`${day}-${index}`} data-key={`${month}-${day}`} onClick={handleDaySelected(day)}>
                 {day}
               </button>
             ) : (
