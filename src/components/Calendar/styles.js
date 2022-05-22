@@ -55,6 +55,7 @@ export const StyledCalendarMonths = styled.div`
   background: #e8e8e8;
   padding: 0.5rem;
   border-radius: 12px;
+  max-width: 100%;
 `;
 
 export const StyledCalendarMonth = styled.div`
@@ -62,17 +63,6 @@ export const StyledCalendarMonth = styled.div`
   flex-direction: column;
   flex: 1;
   position: relative;
-
-  &:not(:first-of-type) {
-    &::before {
-      content: '';
-      position: absolute;
-      background: #663399;
-      height: 100%;
-      width: 2px;
-      transform: translateX(-4px);
-    }
-  }
 `;
 
 export const StyledCalendarHeader = styled.header`
