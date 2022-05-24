@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { getWeeksInMonth } from 'utils';
 
-const now = new Date();
 const isFirstMonth = (index) => index === 0;
 const isLastMonth = (index, months) => months.length - 1 === index;
 
@@ -23,7 +22,7 @@ export function useActualMonths({ months, firstDayOfWeek }) {
           month: date.getMonth(),
           year: date.getFullYear(),
           weeks: getWeeksInMonth(date.getFullYear(), date.getMonth(), firstDayOfWeek),
-          prevMonth: isFirstMonth(monthIndex) && date.getMonth() !== now.getMonth() ? goPrevMonth : null,
+          prevMonth: isFirstMonth(monthIndex) ? goPrevMonth : null,
           nextMonth: isLastMonth(monthIndex, elements) ? goNextMonth : null,
         };
       })

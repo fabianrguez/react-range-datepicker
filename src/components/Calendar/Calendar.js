@@ -20,6 +20,7 @@ export function Calendar({
     handleDaySelected,
     toggleMonthsVisibility,
   } = useCalendarRange({
+    actualMonths,
     onRangeSelected,
   });
 

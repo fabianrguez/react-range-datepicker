@@ -1,7 +1,7 @@
-import { useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { daysDifference, formatDate } from 'utils';
 
-export function useCalendarRange({ onRangeSelected }) {
+export function useCalendarRange({ actualMonths, onRangeSelected }) {
   const monthsRef = useRef();
   const [areMonthsVisible, setAreMonthsVisible] = useState(false);
   const [isRangeActive, setIsRangeActive] = useState();
@@ -82,6 +82,31 @@ export function useCalendarRange({ onRangeSelected }) {
       if (areMonthsVisible) setAreMonthsVisible(false);
     }
   };
+
+  const isRangeVisible = useCallback(
+    () =>
+      startDate &&
+      endDate &&
+      actualMonths.some(({ month, year }) => month === startDate.getMonth() && year === startDate.getFullYear()),
+    [startDate, endDate, actualMonths]
+  );
+
+  const fillRange = useCallback(() => {
+    const endKey = `${endDate.getMonth()}-${endDate.getDate()}`;
+    const $allDays = getAllDays();
+
+    const startIndex = $allDays.findIndex(($day) => $day.getAttribute('data-key') === rangeStart);
+    const endIndex = $allDays.findIndex(($day) => $day.getAttribute('data-key') === endKey);
+
+    const fillRange = $allDays.slice(startIndex, endIndex + 1);
+    fillRange.forEach((day) => day.classList.add('active'));
+  }, [endDate, rangeStart]);
+
+  useEffect(() => {
+    if (isRangeVisible()) {
+      fillRange();
+    }
+  }, [isRangeVisible, fillRange]);
 
   return {
     monthsRef,
